@@ -10,7 +10,7 @@
     <form action="/mulaiKuis" method="post">
         <button>Mulai</button>
     </form>
-    <p th:if="${error}"></p>
+    <p th:if="${error}" th:text="${error}"></p>
     <script>
         let form = document.querySelector("form");
 
