@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <p>Mulai Kuis?</p>
+    <form action="/mulaiKuis" method="post">
+        <button>Mulai</button>
+    </form>
+    <script>
+        let form = document.querySelector("form");
+
+        const userAgent = navigator.userAgent;
+        let inputUserAgent = document.createElement("input");
+        inputUserAgent.hidden = true;
+        inputUserAgent.type = 'text';
+        inputUserAgent.value = userAgent;
+        inputUserAgent.name = 'userAgent';
+
+        const language = navigator.language || navigator.userLanguage; 
+        let inputLanguage = document.createElement("input");
+        inputLanguage.hidden = true;
+        inputLanguage.type = 'text';
+        inputLanguage.value = language;
+        inputLanguage.name = 'language';
+
+        const screenResolution = screen.width + 'x' + screen.height; 
+        let inputScreenResolution = document.createElement("input");
+        inputScreenResolution.hidden = true;
+        inputScreenResolution.type = 'text';
+        inputScreenResolution.value = screenResolution;
+        inputScreenResolution.name = 'screenResolution';
+
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        let inputTimezone = document.createElement("input");
+        inputTimezone.hidden = true
+        inputTimezone.type = 'text';
+        inputTimezone.value = timezone;
+        inputTimezone.name = 'timezone';
+
+        const platform = navigator.platform;
+        let inputPlatform = document.createElement("input");
+        inputPlatform.hidden = true;
+        inputPlatform.type = 'text';
+        inputPlatform.value = platform;
+        inputPlatform.name = 'platform';
+
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        context.textBaseline = 'top';
+        context.font = '14px Arial';
+        context.fillText('Hello, World!', 2, 2);
+        console.log(canvas.toDataURL());
+
+        let inputCanvas = document.createElement("input");
+        inputCanvas.hidden = true;
+        inputCanvas.type = 'text';
+        inputCanvas.value = canvas.toDataURL();
+        inputCanvas.name = 'canvas';
+
+        console.log(userAgent);
+        console.log(language);
+        console.log(screenResolution);
+        console.log(timezone);
+        console.log(platform);
+
+        form.appendChild(inputUserAgent);
+        form.appendChild(inputLanguage);
+        form.appendChild(inputScreenResolution);
+        form.appendChild(inputTimezone);
+        form.appendChild(inputPlatform);
+        form.appendChild(inputCanvas);
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>INI HALAMAN KUIS</h1>
+    <form action="/selesaiKuis" method="post">
+        <button>Selesai</button>
+    </form>
+    <p th:text="${fingerprint}"></p>
+    <script>
+        const fingerprint = /*[[${fingerprint}]]*/ '';
+        console.log('Fingerprint from Thymeleaf:'+ fingerprint);
+        localStorage.setItem("fingerprint", fingerprint);
+
+        // let selesaiBtn = document.querySelector("button");
+        // selesaiBtn.addEventListener("click", () => {
+        //     localStorage.removeItem("fingerprint");
+        // });
+    </script>
+</body>
+</html>
