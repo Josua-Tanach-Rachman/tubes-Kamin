@@ -10,6 +10,7 @@
     <form action="/mulaiKuis" method="post">
         <button>Mulai</button>
     </form>
+    <p th:if="${error}"></p>
     <script>
         let form = document.querySelector("form");
 
@@ -61,6 +62,13 @@
         inputCanvas.value = canvas.toDataURL();
         inputCanvas.name = 'canvas';
 
+        const isiLocalStorage = localStorage.getItem("fingerprint")
+        let inputLocalstorage = document.createElement("input");
+        inputLocalstorage.hidden = true;
+        inputLocalstorage.type = 'text';
+        inputLocalstorage.value = isiLocalStorage;
+        inputLocalstorage.name = 'isiLocalStorage';
+
         console.log(userAgent);
         console.log(language);
         console.log(screenResolution);
@@ -73,6 +81,7 @@
         form.appendChild(inputTimezone);
         form.appendChild(inputPlatform);
         form.appendChild(inputCanvas);
+        form.appendChild(inputLocalstorage);
     </script>
 </body>
 </html>

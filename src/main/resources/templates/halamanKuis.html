@@ -10,16 +10,16 @@
     <form action="/selesaiKuis" method="post">
         <button>Selesai</button>
     </form>
-    <p th:text="${fingerprint}"></p>
-    <script>
+    <!-- <p th:text="${fingerprint}"></p> -->
+    <script th:inline="javascript">
         const fingerprint = /*[[${fingerprint}]]*/ '';
         console.log('Fingerprint from Thymeleaf:'+ fingerprint);
         localStorage.setItem("fingerprint", fingerprint);
 
-        // let selesaiBtn = document.querySelector("button");
-        // selesaiBtn.addEventListener("click", () => {
-        //     localStorage.removeItem("fingerprint");
-        // });
+        let selesaiBtn = document.querySelector("button");
+        selesaiBtn.addEventListener("click", () => {
+            localStorage.removeItem("fingerprint");
+        });
     </script>
 </body>
 </html>

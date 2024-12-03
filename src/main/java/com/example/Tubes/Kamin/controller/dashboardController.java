@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.Tubes.Kamin.users.Users;
 import com.example.Tubes.Kamin.users.UsersRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,13 +39,30 @@ public class dashboardController {
     @RequestParam String platform,
     @RequestParam String
     canvas,
+    @RequestParam String
+    isiLocalStorage,
     Model model, HttpSession session, RedirectAttributes redirectAttributes){
         String username = (String) session.getAttribute("username");
         String res = userAgent + language + screenResolution + timezone + platform + canvas;
         String fingerprint = encoder.encode(res);
-        repo.addFingerprint(username, fingerprint);
-        redirectAttributes.addFlashAttribute("fingerprint",fingerprint);
-        return "redirect:/halamanKuis";
+
+        //cek ada ga fingerprint dari db
+        Users user = repo.findByUsername(username).get(0);
+        if(user.getFingerprint() == null){
+            repo.addFingerprint(username, fingerprint);
+            redirectAttributes.addFlashAttribute("fingerprint",fingerprint);
+            return "redirect:/halamanKuis";
+        }
+        else{
+            if(isiLocalStorage.equals(user.getFingerprint())){
+                return "redirect:/halamanKuis";
+            }
+            else{
+                redirectAttributes.addFlashAttribute("error","telah mulai kuis di device lain");
+                return "redirect:/dashboard";
+            }
+        }
+
     }
 
     @GetMapping("/halamanKuis")
