@@ -1,26 +1,21 @@
 package com.example.Tubes.Kamin.controller;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.Tubes.Kamin.logging.Logging;
 import com.example.Tubes.Kamin.logging.LoggingRepository;
 import com.example.Tubes.Kamin.users.Users;
 import com.example.Tubes.Kamin.users.UsersRepository;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class adminController {
@@ -44,9 +39,27 @@ public class adminController {
     }
 
     @PostMapping("/admin/checkLog")
-    public String filteredLog(@RequestParam(value = "idCat", required = false) Integer idCat, Model model){
+    public String filteredLog(@RequestParam(value = "idCat", required = false) Integer idCat, 
+    @RequestParam(value = "begin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+    @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate, Model model){
+        model.addAttribute("begin", startDate);
+        model.addAttribute("end", endDate);
+        if (startDate == null) {
+            startDate = LocalDate.of(1970, 1, 1); // Default to 1 January 1970
+        }
+
+        if (endDate == null) {
+            endDate = LocalDate.now();
+        }
+
+        Timestamp start = Timestamp.valueOf(startDate.atStartOfDay());
+        Timestamp end = Timestamp.valueOf(endDate.atTime(23, 59, 59));
+
         List<Logging> logs = logRepo.showLog(idCat);
-        model.addAttribute("logs", logs);
+        //testing
+        List<Logging> logs2 = logRepo.logFilterByDateCategory(idCat,start,end);
+        model.addAttribute("logs", logs2);
+        model.addAttribute("category", idCat);
         return "admin/checkLog";
     }
 
