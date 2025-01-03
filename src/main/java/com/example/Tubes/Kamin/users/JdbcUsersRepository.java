@@ -23,16 +23,14 @@ public class JdbcUsersRepository implements UsersRepository {
     @Override
     public int addFingerprint(String username, String fingerprint) {
         String sql = "UPDATE users Set fingerprint = ? WHERE username = ?";
-        return jdbcTemplate.update(sql, fingerprint,username);
+        return jdbcTemplate.update(sql, fingerprint, username);
     }
 
     @Override
     public int deleteFingerprint(String username) {
         String sql = "UPDATE users Set fingerprint = NULL WHERE username = ?";
-        return jdbcTemplate.update(sql,username);
+        return jdbcTemplate.update(sql, username);
     }
-
-    
 
     @Override
     public Optional<Users> searchByFingerprint(String fingerprint) {
@@ -44,11 +42,11 @@ public class JdbcUsersRepository implements UsersRepository {
     @Override
     public int addAkun(String username, String password) {
         String sql = "INSERT INTO users(username, password) VALUES (?,?)";
-        return jdbcTemplate.update(sql,username,password);
+        return jdbcTemplate.update(sql, username, password);
     }
 
     @Override
-    public List<Users> showAllUsers(){
+    public List<Users> showAllUsers() {
         String sql = "SELECT * FROM users WHERE fingerprint IS NOT NULL ORDER BY username ASC;";
         return jdbcTemplate.query(sql, this::mapRowToUsers);
     }
@@ -56,9 +54,8 @@ public class JdbcUsersRepository implements UsersRepository {
     @Override
     public Users mapRowToUsers(ResultSet resultSet, int rowNum) throws SQLException {
         return new Users(
-            resultSet.getString("username"), 
-            resultSet.getString("password"), 
-            resultSet.getString("fingerprint")
-        );
+                resultSet.getString("username"),
+                resultSet.getString("password"),
+                resultSet.getString("fingerprint"));
     }
 }

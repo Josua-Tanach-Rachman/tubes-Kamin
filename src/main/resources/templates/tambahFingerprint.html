@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Fingerprint</title>
+</head>
+<body>
+    <h1>Apakah Anda ingin menambahkan fingerprint perangkat ini?</h1>
+        <form action="/addFingerprint" method="post" style="display: inline;">
+            <input type="hidden" name="username" th:value="${username}">
+            <input type="hidden" name="fingerprint" th:value="${fingerprint}">
+            <button type="submit" class="btn-yes">Ya</button>
+        </form>
+        <form action="/" method="get" style="display: inline;">
+            <button type="submit" class="btn-no">Tidak</button>
+        </form>
+</body>
+</html>

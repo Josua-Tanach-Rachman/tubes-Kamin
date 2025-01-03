@@ -10,7 +10,7 @@ CREATE TABLE users(
 
 CREATE TABLE categories(
 	idCat SERIAL PRIMARY KEY,
-	category CARCHAR(15)
+	category VARCHAR(15)
 );
 
 INSERT INTO categories(category)
