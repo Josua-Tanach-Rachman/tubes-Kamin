@@ -3,6 +3,7 @@ package com.example.Tubes.Kamin.users;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,6 +33,13 @@ public class JdbcUsersRepository implements UsersRepository {
     }
 
     
+
+    @Override
+    public Optional<Users> searchByFingerprint(String fingerprint) {
+        String sql = "SELECT * FROM users WHERE fingerprint = ?";
+        List<Users> res = jdbcTemplate.query(sql, this::mapRowToUsers, fingerprint);
+        return res.isEmpty() ? Optional.empty() : Optional.of(res.get(0));
+    }
 
     @Override
     public int addAkun(String username, String password) {

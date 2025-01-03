@@ -13,5 +13,77 @@
         <input type="password" name="password" id="password" required>
         <button>Submit</button>
     </form>
+    <script>
+        let form = document.querySelector("form");
+
+        const userAgent = navigator.userAgent;
+        let inputUserAgent = document.createElement("input");
+        inputUserAgent.hidden = true;
+        inputUserAgent.type = 'text';
+        inputUserAgent.value = userAgent;
+        inputUserAgent.name = 'userAgent';
+
+        const language = navigator.language || navigator.userLanguage; 
+        let inputLanguage = document.createElement("input");
+        inputLanguage.hidden = true;
+        inputLanguage.type = 'text';
+        inputLanguage.value = language;
+        inputLanguage.name = 'language';
+
+        const screenResolution = screen.width + 'x' + screen.height; 
+        let inputScreenResolution = document.createElement("input");
+        inputScreenResolution.hidden = true;
+        inputScreenResolution.type = 'text';
+        inputScreenResolution.value = screenResolution;
+        inputScreenResolution.name = 'screenResolution';
+
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        let inputTimezone = document.createElement("input");
+        inputTimezone.hidden = true
+        inputTimezone.type = 'text';
+        inputTimezone.value = timezone;
+        inputTimezone.name = 'timezone';
+
+        const platform = navigator.platform;
+        let inputPlatform = document.createElement("input");
+        inputPlatform.hidden = true;
+        inputPlatform.type = 'text';
+        inputPlatform.value = platform;
+        inputPlatform.name = 'platform';
+
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        context.textBaseline = 'top';
+        context.font = '14px Arial';
+        context.fillText('Hello, World!', 2, 2);
+        console.log(canvas.toDataURL());
+
+        let inputCanvas = document.createElement("input");
+        inputCanvas.hidden = true;
+        inputCanvas.type = 'text';
+        inputCanvas.value = canvas.toDataURL();
+        inputCanvas.name = 'canvas';
+
+        const isiLocalStorage = localStorage.getItem("fingerprint")
+        let inputLocalstorage = document.createElement("input");
+        inputLocalstorage.hidden = true;
+        inputLocalstorage.type = 'text';
+        inputLocalstorage.value = isiLocalStorage;
+        inputLocalstorage.name = 'isiLocalStorage';
+
+        console.log(userAgent);
+        console.log(language);
+        console.log(screenResolution);
+        console.log(timezone);
+        console.log(platform);
+
+        form.appendChild(inputUserAgent);
+        form.appendChild(inputLanguage);
+        form.appendChild(inputScreenResolution);
+        form.appendChild(inputTimezone);
+        form.appendChild(inputPlatform);
+        form.appendChild(inputCanvas);
+        form.appendChild(inputLocalstorage);
+    </script>
 </body>
 </html>
