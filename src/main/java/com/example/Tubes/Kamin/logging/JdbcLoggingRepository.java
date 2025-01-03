@@ -2,6 +2,7 @@ package com.example.Tubes.Kamin.logging;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,18 @@ public class JdbcLoggingRepository implements LoggingRepository {
             sql = sql + "WHERE logging.category = " + idCat + " ";
         sql = sql + "ORDER BY time DESC;";
         return jdbcTemplate.query(sql, this::mapRowToLogging);
+    }
+
+    @Override
+    public List<Logging> logFilterByDateCategory(int idCat,Timestamp begin, Timestamp end) {
+        String sql = 
+            "SELECT idlog, time, username, categories.category, intruder " +
+            "FROM logging LEFT JOIN categories ON logging.category = categories.idCat "+
+            "WHERE time >= ? AND time <= ? ";
+        if (idCat > 0)
+            sql = sql + "AND logging.category = " + idCat + " ";
+        sql = sql + "ORDER BY time DESC;";
+        return jdbcTemplate.query(sql, this::mapRowToLogging,begin,end);
     }
 
     private Logging mapRowToLogging(ResultSet resultSet, int rowNum) throws SQLException {
