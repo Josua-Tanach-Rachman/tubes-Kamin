@@ -39,13 +39,19 @@ public class JdbcLoggingRepository implements LoggingRepository {
     }
 
     @Override
-    public List<Logging> logFilterByDateCategory(int idCat,Timestamp begin, Timestamp end) {
+    public List<Logging> logFilterByDateCategory(int idCat,Timestamp begin, Timestamp end, String username, String intruder) {
         String sql = 
             "SELECT idlog, time, username, categories.category, intruder " +
             "FROM logging LEFT JOIN categories ON logging.category = categories.idCat "+
             "WHERE time >= ? AND time <= ? ";
         if (idCat > 0)
             sql = sql + "AND logging.category = " + idCat + " ";
+        if (username != null){
+            sql = sql + "AND username ILIKE '%" + username +"%' ";
+        }
+        if (intruder != null){
+            sql = sql + "AND intruder ILIKE '%" + intruder +"%' ";
+        }
         sql = sql + "ORDER BY time DESC;";
         return jdbcTemplate.query(sql, this::mapRowToLogging,begin,end);
     }

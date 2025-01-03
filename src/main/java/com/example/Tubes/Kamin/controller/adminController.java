@@ -41,7 +41,9 @@ public class adminController {
     @PostMapping("/admin/checkLog")
     public String filteredLog(@RequestParam(value = "idCat", required = false) Integer idCat, 
     @RequestParam(value = "begin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-    @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate, Model model){
+    @RequestParam(value = "end", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  endDate,
+    @RequestParam(value ="username", required = false) String username,
+    @RequestParam(value ="intruder", required = false) String intruder, Model model){
         model.addAttribute("begin", startDate);
         model.addAttribute("end", endDate);
         if (startDate == null) {
@@ -57,9 +59,17 @@ public class adminController {
 
         List<Logging> logs = logRepo.showLog(idCat);
         //testing
-        List<Logging> logs2 = logRepo.logFilterByDateCategory(idCat,start,end);
+        if(username.equals("")){
+            username = null;
+        }
+        if(intruder.equals("")){
+            intruder = null;
+        }
+        List<Logging> logs2 = logRepo.logFilterByDateCategory(idCat,start,end,username,intruder);
         model.addAttribute("logs", logs2);
         model.addAttribute("category", idCat);
+        model.addAttribute("username", username);
+        model.addAttribute("intruder", intruder);
         return "admin/checkLog";
     }
 

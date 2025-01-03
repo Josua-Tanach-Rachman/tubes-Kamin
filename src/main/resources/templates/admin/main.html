@@ -2,6 +2,91 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Admin</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Container */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+
+        /* Header */
+        header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 45%;
+        }
+
+        .primary-btn {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .primary-btn:hover {
+            background-color: #45a049;
+        }
+
+        .secondary-btn {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        .secondary-btn:hover {
+            background-color: #e53935;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 600px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Admin Page</h1>
