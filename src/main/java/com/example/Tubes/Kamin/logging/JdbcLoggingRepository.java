@@ -14,16 +14,27 @@ public class JdbcLoggingRepository implements LoggingRepository {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public int addLog(String username, String reasons, String category) {
-        String sql = "INSERT INTO logging (username, reasons, category) VALUES (?,?,?) RETURNING idlog";
-        int idArtis = jdbcTemplate.queryForObject(sql, Integer.class, username, reasons, category);
-        return idArtis;
+    public int addLog(String username, int category, String intruder) {
+        String sql = "INSERT INTO logging (username, category, intruder) VALUES (?,?,?) RETURNING idlog";
+        int idlog = jdbcTemplate.queryForObject(sql, Integer.class, username, category, intruder);
+        return idlog;
     }
 
     @Override
-    public List<Logging> findByCategoryWithUsername(String category, String username) {
+    public List<Logging> findByCategoryWithUsername(int category, String username) {
         String sql = "SELECT * FROM logging WHERE category = ?, username ILIKE ?";
         return jdbcTemplate.query(sql, this::mapRowToLogging, category, "%" + category + "%");
+    }
+
+    @Override
+    public List<Logging> showLog(int idCat) {
+        String sql = 
+            "SELECT idlog, time, username, categories.category, intruder " +
+            "FROM logging LEFT JOIN categories ON logging.category = categories.idCat ";
+        if (idCat > 0)
+            sql = sql + "WHERE logging.category = " + idCat + " ";
+        sql = sql + "ORDER BY time DESC;";
+        return jdbcTemplate.query(sql, this::mapRowToLogging);
     }
 
     private Logging mapRowToLogging(ResultSet resultSet, int rowNum) throws SQLException {
@@ -31,8 +42,8 @@ public class JdbcLoggingRepository implements LoggingRepository {
             resultSet.getInt("idLog"),
             resultSet.getTimestamp("time"),
             resultSet.getString("username"),
-            resultSet.getString("reasons"),
-            resultSet.getString("category")
+            resultSet.getString("category"),
+            resultSet.getString("intruder")
         );
     }
 }

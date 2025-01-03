@@ -48,6 +48,12 @@ public class JdbcUsersRepository implements UsersRepository {
     }
 
     @Override
+    public List<Users> showAllUsers(){
+        String sql = "SELECT * FROM users WHERE fingerprint IS NOT NULL ORDER BY username ASC;";
+        return jdbcTemplate.query(sql, this::mapRowToUsers);
+    }
+
+    @Override
     public Users mapRowToUsers(ResultSet resultSet, int rowNum) throws SQLException {
         return new Users(
             resultSet.getString("username"), 

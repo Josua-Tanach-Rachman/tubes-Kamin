@@ -11,6 +11,6 @@ public class Logging {
     private int idLog;
     private Timestamp time;
     private String username;
-    private String reasons;
     private String category;
+    private String intruder;
 }
