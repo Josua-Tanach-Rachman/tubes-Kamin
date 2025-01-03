@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Logs</h1>
+    <div>
+        <form method="post" action="/admin/checkLog">
+            <label>
+                <span class="form-label">Category</span>:
+                <select name="idCat" class="form-control" >
+                    <option value="0">all</option>
+                    <option value="1">registered</option>
+                    <option value="2">unregistered</option>
+                </select>
+            </label>
+            <input type="submit" value="Filter" />
+        </form>
+    </div>
+    <div> 
+        </br>
+        <table border=1>
+            <tr>
+                <th> Time </th>
+                <th> Username </th>
+                <th> Category </th>
+                <th> Intruder </th>
+            </tr>
+            <tr th:each="row : ${logs}">
+                <td th:text="${row.time}"></td>
+                <td th:text="${row.username}"></td>
+                <td th:text="${row.category}"></td>
+                <td th:text="${row.intruder}"></td>
+            </tr>
+        </table>
+        </br>
+    </div>
+    <button onclick="location.href='/admin'" type="button">Back</button>
+</body>
+</html>

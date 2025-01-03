@@ -12,4 +12,5 @@ public interface UsersRepository {
     Optional<Users> searchByFingerprint(String fingerprint);
     int addAkun(String username, String password);
     Users mapRowToUsers(ResultSet resultSet, int rowNum) throws SQLException;
+    List<Users> showAllUsers();
 }

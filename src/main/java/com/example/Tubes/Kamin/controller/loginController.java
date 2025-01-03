@@ -69,10 +69,10 @@ public class loginController {
                 Optional<Users> userOptional = userRepo.searchByFingerprint(hashedFingerprint);
                 if (userOptional.isPresent()) {
                     Users user2 = userOptional.get();
-                    logRepo.addLog(user.getUsername(), "device is registered to "+user2.getUsername(), "registered");
+                    logRepo.addLog(user.getUsername(), 1, user2.getUsername());
                     return String.format("device is registered to %s", user2.getUsername());
                 } else {
-                    logRepo.addLog(user.getUsername(), "device is unregistered", "unregistered");
+                    logRepo.addLog(user.getUsername(), 2, null);
                     return String.format("device unregistered, the device: %s", hashedFingerprint);
                 }
                 // return String.format("Gagal dengan userfingerprint: %s", hashedFingerprint);    
@@ -80,7 +80,6 @@ public class loginController {
 
         }
         else{
-            logRepo.addLog(user.getUsername(), "wrong password" , "password");
             return "redirect:/";
         }
     }

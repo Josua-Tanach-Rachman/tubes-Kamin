@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Delete Fingerprint</h1>
+        <form method="post" action="/admin/deleteFP">
+            <!--use of dropdown to prevent inconsistent input-->
+            <label>
+                <span class="form-label">Select Username</span>:
+                </br>
+                <select name="username" class="form-control" >
+                    <option th:each="row : ${users}" 
+                            th:value="${row.username}" 
+                            th:text="${row.username}">
+                    </option>
+                </select>
+            </label>
+            <br>
+            
+            <input type="submit" value="Delete" />
+        </form>
+    </br>
+
+    <p th:if="${feedback == 'deleted'}">The fingerprint has been deleted successfully!</p>
+     
+    <button onclick="location.href='/admin'" type="button">Back</button>
+</body>
+</html>
