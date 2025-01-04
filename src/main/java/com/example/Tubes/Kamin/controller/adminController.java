@@ -82,6 +82,7 @@ public class adminController {
 
     @PostMapping("/admin/deleteFP")
     public String feedbackFP(@RequestParam(value = "username", required = false) String username, Model model){
+        model.addAttribute("deleted", username);
         userRepo.deleteFingerprint(username);
         List<Users> users = userRepo.showAllUsers();
         model.addAttribute("users", users);

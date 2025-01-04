@@ -132,6 +132,7 @@
             color: green;
             font-size: 1rem;
             margin-top: 15px;
+            text-align: center;
         }
 
         /* Button Styling */
@@ -196,7 +197,7 @@
             </form>
             
             <!-- Feedback Message -->
-            <p th:if="${feedback == 'deleted'}" class="feedback">The fingerprint has been deleted successfully!</p>
+            <p th:if="${feedback == 'deleted'}" class="feedback" th:text="'The fingerprint from ' + ${deleted}+ ' has been deleted successfully!'">The fingerprint has been deleted successfully!</p>
         </div>
     </div>
 

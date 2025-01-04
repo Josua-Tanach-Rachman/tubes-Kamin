@@ -4,84 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        /* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f8fa; /* Keep the body background color as before */
+    color: #333;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: scroll;
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* Remove any margin */
+}
+
+/* Header Styling */
+header {
+            background-color: #2c3e50; /* Same color as header */
+            color: #fff;
+            text-align: center;
+            height: 162px; /* Set header height to 150px */
+            width: 100%; /* Full width */
+            display: flex;
+            justify-content: center;  /* Center horizontally */
+            align-items: center;  /* Center vertically */
+            position: fixed; /* Make header fixed at the top */
+            top: 0; /* Align at the very top of the screen */
+            left: 0; /* Align to the left edge of the screen */
+        }
+
+
+header h1 {
+    font-size: 4rem; /* Increased font size for larger text */
+    margin: 0;
+    line-height: 1.2; /* Adjust line height for better spacing */
+}
+
+        /* Dashboard Container Styling */
+        .dashboard-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 0px;
+        }
+
+        .dashboard-container h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
+        button {
+            padding: 12px 24px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .dashboard-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>Mulai Kuis?</p>
-    <form action="/mulaiKuis" method="post">
-        <button>Mulai</button>
-    </form>
-    <p th:if="${error}" th:text="${error}"></p>
-    <script>
-        let form = document.querySelector("form");
+    <header>
+        <h1>Login Successful</h1>
+    </header>
 
-        const userAgent = navigator.userAgent;
-        let inputUserAgent = document.createElement("input");
-        inputUserAgent.hidden = true;
-        inputUserAgent.type = 'text';
-        inputUserAgent.value = userAgent;
-        inputUserAgent.name = 'userAgent';
-
-        const language = navigator.language || navigator.userLanguage; 
-        let inputLanguage = document.createElement("input");
-        inputLanguage.hidden = true;
-        inputLanguage.type = 'text';
-        inputLanguage.value = language;
-        inputLanguage.name = 'language';
-
-        const screenResolution = screen.width + 'x' + screen.height; 
-        let inputScreenResolution = document.createElement("input");
-        inputScreenResolution.hidden = true;
-        inputScreenResolution.type = 'text';
-        inputScreenResolution.value = screenResolution;
-        inputScreenResolution.name = 'screenResolution';
-
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        let inputTimezone = document.createElement("input");
-        inputTimezone.hidden = true;
-        inputTimezone.type = 'text';
-        inputTimezone.value = timezone;
-        inputTimezone.name = 'timezone';
-
-        const platform = navigator.platform;
-        let inputPlatform = document.createElement("input");
-        inputPlatform.hidden = true;
-        inputPlatform.type = 'text';
-        inputPlatform.value = platform;
-        inputPlatform.name = 'platform';
-
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        context.textBaseline = 'top';
-        context.font = '14px Arial';
-        context.fillText('Hello, World!', 2, 2);
-        console.log(canvas.toDataURL());
-
-        let inputCanvas = document.createElement("input");
-        inputCanvas.hidden = true;
-        inputCanvas.type = 'text';
-        inputCanvas.value = canvas.toDataURL();
-        inputCanvas.name = 'canvas';
-
-        const isiLocalStorage = localStorage.getItem("fingerprint")
-        let inputLocalstorage = document.createElement("input");
-        inputLocalstorage.hidden = true;
-        inputLocalstorage.type = 'text';
-        inputLocalstorage.value = isiLocalStorage;
-        inputLocalstorage.name = 'isiLocalStorage';
-
-        console.log(userAgent);
-        console.log(language);
-        console.log(screenResolution);
-        console.log(timezone);
-        console.log(platform);
-
-        form.appendChild(inputUserAgent);
-        form.appendChild(inputLanguage);
-        form.appendChild(inputScreenResolution);
-        form.appendChild(inputTimezone);
-        form.appendChild(inputPlatform);
-        form.appendChild(inputCanvas);
-        form.appendChild(inputLocalstorage);
-    </script>
+    <div class="dashboard-container">
+        <p>You have successfully signed into your account. You can close this window and continue using the application.</p>
+        <button onclick="window.location.href='/logout'">Log Out</button>
+    </div>
 </body>
 </html>
