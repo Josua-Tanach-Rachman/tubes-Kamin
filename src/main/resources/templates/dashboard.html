@@ -93,16 +93,78 @@ header h1 {
                 padding: 20px;
             }
         }
+
+        /* Popup Modal Styling */
+        #confirmationPopup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn, #noBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #yesBtn:hover {
+            background-color: #2980b9;
+        }
+
+        #noBtn {
+            background-color: #e74c3c;
+        }
+
+        #noBtn:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Login Successful</h1>
+        <h1 th:text="${judul}">Login Successful</h1>
     </header>
 
     <div class="dashboard-container">
-        <p>You have successfully signed into your account. You can close this window and continue using the application.</p>
-        <button onclick="window.location.href='/logout'">Log Out</button>
+        <p th:text="${kalimat}"></p>
+        <button onclick="window.location.href='/login'">Log Out</button>
     </div>
+
+    <div id="confirmationPopup" class="popup">
+        <div class="popup-content">
+            <p>"Perangkat berhasil diikat"</p>
+            <button id="okay">Okay</button>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        const popup = document.getElementById('confirmationPopup');
+        let shouldShowPopup = /*[[${shouldShowPopup}]]*/ false;
+        if (shouldShowPopup) {
+            popup.style.display = 'flex'; // Show the modal
+        }
+        let okbutton = document.getElementById("okay")
+        okbutton.addEventListener("click",()=>{
+            popup.style.display = 'none';
+        })
+    </script>
 </body>
 </html>

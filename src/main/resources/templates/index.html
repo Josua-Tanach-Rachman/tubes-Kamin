@@ -123,6 +123,51 @@
                 padding: 20px;
             }
         }
+
+        /* Popup Modal Styling */
+        #confirmationPopup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn, #noBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #yesBtn:hover {
+            background-color: #2980b9;
+        }
+
+        #noBtn {
+            background-color: #e74c3c;
+        }
+
+        #noBtn:hover {
+            background-color: #c0392b;
+        }
+
     </style>
 </head>
 <body>
@@ -143,7 +188,23 @@
         </form>
     </div>
 
-    <script>
+    <div id="confirmationPopup" class="popup">
+        <div class="popup-content">
+            <p>"Apakah anda yakin untuk mengikat perangkat ini dengan akun ini?"</p>
+            <form action="/addFingerprint" method="post" style="display: inline;">
+                <input type="hidden" name="username" th:value="${username}">
+                <input type="hidden" name="fingerprint" th:value="${fingerprint}">
+                <button id="yesBtn">Ya</button>
+            </form>
+            <form action="/" method="get" style="display: inline;">
+                <button id="noBtn">Tidak</button>
+            </form>
+            <!-- <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button> -->
+        </div>
+    </div>
+
+    <script th:inline="javascript">
         let form = document.querySelector("form");
 
         const userAgent = navigator.userAgent;
@@ -214,6 +275,54 @@
         form.appendChild(inputPlatform);
         form.appendChild(inputCanvas);
         form.appendChild(inputLocalstorage);
+
+        // Get the value of shouldShowPopup from Thymeleaf
+        let shouldShowPopup = /*[[${shouldShowPopup}]]*/ false;
+        let username = /*[[${username}]]*/ ""; 
+        let fingerprint = /*[[${fingerprint}]]*/ "";  
+        console.log(shouldShowPopup);
+        console.log(username);
+        console.log(fingerprint);
+
+        // Get elements
+        const popup = document.getElementById('confirmationPopup');
+        const showPopupBtn = document.getElementById('showPopupBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+
+        // Show the popup automatically if shouldShowPopup is true
+        if (shouldShowPopup) {
+            popup.style.display = 'flex'; // Show the modal
+        }
+
+        // // Hide the popup when "Ya" or "Tidak" is clicked
+        // yesBtn.onclick = function() {
+        //     alert("Perangkat ini berhasil diikat dengan akun!");
+        //     popup.style.display = 'none';
+
+        //     // Send a POST request using fetch
+        //     fetch('/addFingerprint', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded', // Make sure data is sent in the right format
+        //         },
+        //         body: `username=${encodeURIComponent(username)}&fingerprint=${encodeURIComponent(fingerprint)}`
+        //     })
+        //     .then(response => {
+        //         if (response.ok) {
+        //             window.location.href = "/dashboard";  // Redirect to dashboard after successful POST request
+        //         } else {
+        //             alert("Error occurred while binding the device with the account.");
+        //         }
+        //     })
+        //     .catch(error => {
+        //         alert("Network error: " + error.message);
+        //     });
+        // }
+
+        // noBtn.onclick = function() {
+        //     popup.style.display = 'none'; // Close the popup without action
+        // }
     </script>
 </body>
 </html>
