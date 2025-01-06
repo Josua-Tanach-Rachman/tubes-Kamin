@@ -215,11 +215,11 @@
             background-color: #2980b9;
         }
 
-        #noBtn {
+        #noBtn, #delete {
             background-color: #e74c3c;
         }
 
-        #noBtn:hover {
+        #noBtn:hover, #delete:hover {
             background-color: #c0392b;
         }
 
@@ -241,7 +241,7 @@
         <!-- Form Section -->
         <div class="form-container">
             <h2>Delete Fingerprint</h2>
-            <form method="post" action="/admin/deleteFP">
+            <form method="post" action="/admin/deleteFP/confirmation">
                 <!-- Use of dropdown to prevent inconsistent input -->
                 <label>
                     <span class="form-label">Select Username</span>:
@@ -258,13 +258,13 @@
 
             <div id="confirmationPopup" class="popup">
                 <div class="popup-content">
-                    <p>"Apakah anda yakin untuk mengikat perangkat ini dengan akun ini?"</p>
-                    <form action="/addFingerprint" method="post" style="display: inline;">
+                    <p th:text="'Apakah anda yakin untuk menghapus fingerprint dari akun dengan username = '+ ${username} + '?'"></p>
+                    <form method="post" action="/admin/deleteFP" style="display: inline;">
                         <input type="hidden" name="username" th:value="${username}">
                         <input type="hidden" name="fingerprint" th:value="${fingerprint}">
                         <button id="yesBtn">Ya</button>
                     </form>
-                    <form action="/" method="get" style="display: inline;">
+                    <form action="/admin/deleteFP" method="get" style="display: inline;">
                         <button id="noBtn">Tidak</button>
                     </form>
                     <!-- <button id="yesBtn">Yes</button>
@@ -286,10 +286,6 @@
         if (shouldShowPopup) {
             popup.style.display = 'flex'; // Show the modal
         }
-        let okbutton = document.getElementById("okay")
-        okbutton.addEventListener("click",()=>{
-            popup.style.display = 'none';
-        })
     </script>
 </body>
 </html>
