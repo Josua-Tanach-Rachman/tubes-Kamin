@@ -68,7 +68,7 @@
         .main-content {
             display: flex;
             justify-content: center;
-            align-items: center;
+            margin-top: 167px;
             flex: 1; /* Ensure the container takes the remaining height */
             padding: 30px;
             width: 100%;
@@ -88,6 +88,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: fit-content;
         }
 
         .form-label {
@@ -132,6 +133,7 @@
             color: green;
             font-size: 1rem;
             margin-top: 15px;
+            text-align: center;
         }
 
         /* Button Styling */
@@ -163,15 +165,74 @@
             }
         }
 
+        #logoutButton {
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#logoutButton:hover {
+    background-color: #e60000;
+}
+
+/* Popup Modal Styling */
+#confirmationPopup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn, #noBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #yesBtn:hover {
+            background-color: #2980b9;
+        }
+
+        #noBtn, #delete {
+            background-color: #e74c3c;
+        }
+
+        #noBtn:hover, #delete:hover {
+            background-color: #c0392b;
+        }
+
     </style>
 </head>
 <body>
     <!-- Header with Navigation Bar -->
     <header>
-        <h1>Delete Fingerprint</h1>
+        <h1>Admin Portal</h1>
         <nav>
             <button onclick="location.href='/admin/checkLog'" type="button">See Log</button>
             <button onclick="location.href='/admin/deleteFP'" type="button">Delete Fingerprint</button>
+            <button onclick="location.href='/login'" id="logoutButton">Logout</button>
         </nav>
     </header>
 
@@ -180,7 +241,7 @@
         <!-- Form Section -->
         <div class="form-container">
             <h2>Delete Fingerprint</h2>
-            <form method="post" action="/admin/deleteFP">
+            <form method="post" action="/admin/deleteFP/confirmation">
                 <!-- Use of dropdown to prevent inconsistent input -->
                 <label>
                     <span class="form-label">Select Username</span>:
@@ -192,15 +253,39 @@
                         </option>
                     </select>
                 </label>
-                <input type="submit" value="Delete" />
+                <input type="submit" value="Delete" id="delete">
             </form>
+
+            <div id="confirmationPopup" class="popup">
+                <div class="popup-content">
+                    <p th:text="'Apakah anda yakin untuk menghapus fingerprint dari akun dengan username = '+ ${username} + '?'"></p>
+                    <form method="post" action="/admin/deleteFP" style="display: inline;">
+                        <input type="hidden" name="username" th:value="${username}">
+                        <input type="hidden" name="fingerprint" th:value="${fingerprint}">
+                        <button id="yesBtn">Ya</button>
+                    </form>
+                    <form action="/admin/deleteFP" method="get" style="display: inline;">
+                        <button id="noBtn">Tidak</button>
+                    </form>
+                    <!-- <button id="yesBtn">Yes</button>
+                    <button id="noBtn">No</button> -->
+                </div>
+            </div>
             
             <!-- Feedback Message -->
-            <p th:if="${feedback == 'deleted'}" class="feedback">The fingerprint has been deleted successfully!</p>
+            <p th:if="${feedback == 'deleted'}" class="feedback" th:text="'The fingerprint from ' + ${deleted}+ ' has been deleted successfully!'">The fingerprint has been deleted successfully!</p>
         </div>
     </div>
 
     <!-- Back Button -->
     <!-- <button onclick="location.href='/admin'" type="button">Back</button> -->
+
+    <script th:inline="javascript">
+        const popup = document.getElementById('confirmationPopup');
+        let shouldShowPopup = /*[[${shouldShowPopup}]]*/ false;
+        if (shouldShowPopup) {
+            popup.style.display = 'flex'; // Show the modal
+        }
+    </script>
 </body>
 </html>

@@ -8,5 +8,6 @@ import lombok.Data;
 public class Users {
     String username;
     String password;
+    String roles;
     String fingerprint;
 }

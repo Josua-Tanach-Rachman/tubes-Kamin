@@ -40,9 +40,9 @@ public class JdbcUsersRepository implements UsersRepository {
     }
 
     @Override
-    public int addAkun(String username, String password) {
-        String sql = "INSERT INTO users(username, password) VALUES (?,?)";
-        return jdbcTemplate.update(sql, username, password);
+    public int addAkun(String username, String password, String roles) {
+        String sql = "INSERT INTO users(username, password, roles) VALUES (?,?,?)";
+        return jdbcTemplate.update(sql, username, password, roles);
     }
 
     @Override
@@ -56,6 +56,7 @@ public class JdbcUsersRepository implements UsersRepository {
         return new Users(
                 resultSet.getString("username"),
                 resultSet.getString("password"),
+                resultSet.getString("roles"),
                 resultSet.getString("fingerprint"));
     }
 }

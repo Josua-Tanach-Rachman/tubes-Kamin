@@ -82,6 +82,7 @@ public class adminController {
 
     @PostMapping("/admin/deleteFP")
     public String feedbackFP(@RequestParam(value = "username", required = false) String username, Model model){
+        model.addAttribute("deleted", username);
         userRepo.deleteFingerprint(username);
         List<Users> users = userRepo.showAllUsers();
         model.addAttribute("users", users);
@@ -89,5 +90,12 @@ public class adminController {
         return "admin/deleteFP";
     }
 
-
+    @PostMapping("/admin/deleteFP/confirmation")
+    public String popupFP(@RequestParam(value = "username", required = false) String username, Model model){
+        List<Users> users = userRepo.showAllUsers();
+        model.addAttribute("users", users);
+        model.addAttribute("username", username);
+        model.addAttribute("shouldShowPopup", true);
+        return "admin/deleteFP";
+    }
 }

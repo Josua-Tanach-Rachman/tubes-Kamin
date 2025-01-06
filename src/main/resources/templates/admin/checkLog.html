@@ -230,16 +230,31 @@ input[type="submit"] {
     margin-top: 20px;
 }
 
+#logoutButton {
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#logoutButton:hover {
+    background-color: #e60000;
+}
+
 
     </style>
 </head>
 <body>
     <!-- Header with Navigation Bar -->
     <header>
-        <h1>Admin Page</h1>
+        <h1>Admin Portal</h1>
         <nav>
             <button onclick="location.href='/admin/checkLog'" type="button">See Log</button>
             <button onclick="location.href='/admin/deleteFP'" type="button">Delete Fingerprint</button>
+            <button onclick="location.href='/login'" id="logoutButton">Logout</button>
         </nav>
     </header>
 

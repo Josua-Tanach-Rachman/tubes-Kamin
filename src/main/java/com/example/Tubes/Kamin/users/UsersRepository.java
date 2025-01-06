@@ -10,7 +10,7 @@ public interface UsersRepository {
     int addFingerprint(String username, String fingerprint);
     int deleteFingerprint(String username);
     Optional<Users> searchByFingerprint(String fingerprint);
-    int addAkun(String username, String password);
+    int addAkun(String username, String password, String roles);
     Users mapRowToUsers(ResultSet resultSet, int rowNum) throws SQLException;
     List<Users> showAllUsers();
 }

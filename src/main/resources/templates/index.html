@@ -5,89 +5,206 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
+        /* Global Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
+        /* Body Styling */
         body {
-            height: 100vh;
-            background: linear-gradient(135deg, #004b3d, #0b5521);
-            color: white;
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f8fa; /* Keep the body background color as before */
+            color: #333;
+            padding: 0;
             display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: scroll;
             justify-content: center;
             align-items: center;
+            margin: 0; /* Remove any margin */
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        /* Header Styling */
+        header {
+            background-color: #2c3e50; /* Same color as header */
+            color: #fff;
             text-align: center;
-            width: 400px;
+            height: 162px; /* Set header height to 150px */
+            width: 100%; /* Full width */
+            display: flex;
+            justify-content: center;  /* Center horizontally */
+            align-items: center;  /* Center vertically */
+            position: fixed; /* Make header fixed at the top */
+            top: 0; /* Align at the very top of the screen */
+            left: 0; /* Align to the left edge of the screen */
         }
 
-        .container h1 {
+        header h1 {
+            font-size: 4rem; /* Increased font size for larger text */
+            margin: 0;
+            line-height: 1.2; /* Adjust line height for better spacing */
+        }
+
+        /* Main Content Styling */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 160px; /* Adjusted margin to provide space for the fixed header */
+        }
+
+        .login-container h2 {
+            font-size: 1.8rem;
+            color: #333;
             margin-bottom: 20px;
-            font-size: 1.5rem;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
+        /* Form Styling */
+        .form-label {
+            font-weight: bold;
+            font-size: 1rem;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-size: 1rem;
         }
 
+        /* Style for text input fields */
         input[type="text"],
         input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
+            width: 100%; /* Make input field take full width of the container */
+            padding: 10px; /* Add padding for better spacing */
+            border-radius: 5px; /* Rounded corners */
+            border: 1px solid #ddd; /* Light gray border */
+            font-size: 1rem; /* Standard font size */
+            margin-top: 5px; /* Small margin on top */
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
         }
 
-        button {
-            background-color: #ffd600;
-            color: black;
+        /* Optional: Focus styling for text input */
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none; /* Remove default focus outline */
+            border-color: #3498db; /* Change border color on focus */
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); /* Add subtle shadow */
+        }
+
+        /* Submit Button Styling */
+        button[type="submit"] {
+            padding: 12px 24px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 1.1rem;
             border: none;
-            padding: 10px 15px;
-            font-size: 1rem;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
-        button:hover {
-            background-color: #ffab00;
+        button[type="submit"]:hover {
+            background-color: #2980b9;
         }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .login-container {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+
+        /* Popup Modal Styling */
+        #confirmationPopup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn, #noBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #yesBtn:hover {
+            background-color: #2980b9;
+        }
+
+        #noBtn {
+            background-color: #e74c3c;
+        }
+
+        #noBtn:hover {
+            background-color: #c0392b;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>Login</h1>
+    </header>
+
+    <div class="login-container">
+        <h2>Sign In</h2>
         <form action="/login" method="post">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <button type="submit">Submit</button>
+            <label for="username" class="form-label">Username :</label>
+            <input type="text" name="username" id="username" required>
+
+            <label for="password" class="form-label">Password :</label>
+            <input type="password" name="password" id="password" required>
+
+            <button type="submit">Login</button>
         </form>
     </div>
-    <script>
+
+    <div id="confirmationPopup" class="popup">
+        <div class="popup-content">
+            <p>"Apakah anda yakin untuk mengikat perangkat ini dengan akun ini?"</p>
+            <form action="/addFingerprint" method="post" style="display: inline;">
+                <input type="hidden" name="username" th:value="${username}">
+                <input type="hidden" name="fingerprint" th:value="${fingerprint}">
+                <button id="yesBtn">Ya</button>
+            </form>
+            <form action="/" method="get" style="display: inline;">
+                <button id="noBtn">Tidak</button>
+            </form>
+            <!-- <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button> -->
+        </div>
+    </div>
+
+    <script th:inline="javascript">
         let form = document.querySelector("form");
 
         const userAgent = navigator.userAgent;
@@ -97,19 +214,19 @@
         inputUserAgent.value = userAgent;
         inputUserAgent.name = 'userAgent';
 
-        const language = navigator.language || navigator.userLanguage; 
-        let inputLanguage = document.createElement("input");
-        inputLanguage.hidden = true;
-        inputLanguage.type = 'text';
-        inputLanguage.value = language;
-        inputLanguage.name = 'language';
+        // const language = navigator.language || navigator.userLanguage; 
+        // let inputLanguage = document.createElement("input");
+        // inputLanguage.hidden = true;
+        // inputLanguage.type = 'text';
+        // inputLanguage.value = language;
+        // inputLanguage.name = 'language';
 
-        const screenResolution = screen.width + 'x' + screen.height; 
-        let inputScreenResolution = document.createElement("input");
-        inputScreenResolution.hidden = true;
-        inputScreenResolution.type = 'text';
-        inputScreenResolution.value = screenResolution;
-        inputScreenResolution.name = 'screenResolution';
+        // const screenResolution = screen.width + 'x' + screen.height; 
+        // let inputScreenResolution = document.createElement("input");
+        // inputScreenResolution.hidden = true;
+        // inputScreenResolution.type = 'text';
+        // inputScreenResolution.value = screenResolution;
+        // inputScreenResolution.name = 'screenResolution';
 
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         let inputTimezone = document.createElement("input");
@@ -146,18 +263,66 @@
         inputLocalstorage.name = 'isiLocalStorage';
 
         console.log(userAgent);
-        console.log(language);
-        console.log(screenResolution);
+        // console.log(language);
+        // console.log(screenResolution);
         console.log(timezone);
         console.log(platform);
 
         form.appendChild(inputUserAgent);
-        form.appendChild(inputLanguage);
-        form.appendChild(inputScreenResolution);
+        // form.appendChild(inputLanguage);
+        // form.appendChild(inputScreenResolution);
         form.appendChild(inputTimezone);
         form.appendChild(inputPlatform);
         form.appendChild(inputCanvas);
         form.appendChild(inputLocalstorage);
+
+        // Get the value of shouldShowPopup from Thymeleaf
+        let shouldShowPopup = /*[[${shouldShowPopup}]]*/ false;
+        let username = /*[[${username}]]*/ ""; 
+        let fingerprint = /*[[${fingerprint}]]*/ "";  
+        console.log(shouldShowPopup);
+        console.log(username);
+        console.log(fingerprint);
+
+        // Get elements
+        const popup = document.getElementById('confirmationPopup');
+        const showPopupBtn = document.getElementById('showPopupBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+
+        // Show the popup automatically if shouldShowPopup is true
+        if (shouldShowPopup) {
+            popup.style.display = 'flex'; // Show the modal
+        }
+
+        // // Hide the popup when "Ya" or "Tidak" is clicked
+        // yesBtn.onclick = function() {
+        //     alert("Perangkat ini berhasil diikat dengan akun!");
+        //     popup.style.display = 'none';
+
+        //     // Send a POST request using fetch
+        //     fetch('/addFingerprint', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded', // Make sure data is sent in the right format
+        //         },
+        //         body: `username=${encodeURIComponent(username)}&fingerprint=${encodeURIComponent(fingerprint)}`
+        //     })
+        //     .then(response => {
+        //         if (response.ok) {
+        //             window.location.href = "/dashboard";  // Redirect to dashboard after successful POST request
+        //         } else {
+        //             alert("Error occurred while binding the device with the account.");
+        //         }
+        //     })
+        //     .catch(error => {
+        //         alert("Network error: " + error.message);
+        //     });
+        // }
+
+        // noBtn.onclick = function() {
+        //     popup.style.display = 'none'; // Close the popup without action
+        // }
     </script>
 </body>
 </html>
