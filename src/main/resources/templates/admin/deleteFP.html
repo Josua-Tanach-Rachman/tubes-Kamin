@@ -68,7 +68,7 @@
         .main-content {
             display: flex;
             justify-content: center;
-            align-items: center;
+            margin-top: 167px;
             flex: 1; /* Ensure the container takes the remaining height */
             padding: 30px;
             width: 100%;
@@ -88,6 +88,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: fit-content;
         }
 
         .form-label {
@@ -178,6 +179,50 @@
     background-color: #e60000;
 }
 
+/* Popup Modal Styling */
+#confirmationPopup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn, #noBtn {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #yesBtn:hover {
+            background-color: #2980b9;
+        }
+
+        #noBtn {
+            background-color: #e74c3c;
+        }
+
+        #noBtn:hover {
+            background-color: #c0392b;
+        }
+
     </style>
 </head>
 <body>
@@ -208,8 +253,24 @@
                         </option>
                     </select>
                 </label>
-                <input type="submit" value="Delete" />
+                <input type="submit" value="Delete" id="delete">
             </form>
+
+            <div id="confirmationPopup" class="popup">
+                <div class="popup-content">
+                    <p>"Apakah anda yakin untuk mengikat perangkat ini dengan akun ini?"</p>
+                    <form action="/addFingerprint" method="post" style="display: inline;">
+                        <input type="hidden" name="username" th:value="${username}">
+                        <input type="hidden" name="fingerprint" th:value="${fingerprint}">
+                        <button id="yesBtn">Ya</button>
+                    </form>
+                    <form action="/" method="get" style="display: inline;">
+                        <button id="noBtn">Tidak</button>
+                    </form>
+                    <!-- <button id="yesBtn">Yes</button>
+                    <button id="noBtn">No</button> -->
+                </div>
+            </div>
             
             <!-- Feedback Message -->
             <p th:if="${feedback == 'deleted'}" class="feedback" th:text="'The fingerprint from ' + ${deleted}+ ' has been deleted successfully!'">The fingerprint has been deleted successfully!</p>
@@ -218,5 +279,17 @@
 
     <!-- Back Button -->
     <!-- <button onclick="location.href='/admin'" type="button">Back</button> -->
+
+    <script th:inline="javascript">
+        const popup = document.getElementById('confirmationPopup');
+        let shouldShowPopup = /*[[${shouldShowPopup}]]*/ false;
+        if (shouldShowPopup) {
+            popup.style.display = 'flex'; // Show the modal
+        }
+        let okbutton = document.getElementById("okay")
+        okbutton.addEventListener("click",()=>{
+            popup.style.display = 'none';
+        })
+    </script>
 </body>
 </html>

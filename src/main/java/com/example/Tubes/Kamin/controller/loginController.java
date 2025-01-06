@@ -46,8 +46,8 @@ public class loginController {
     public String login(@RequestParam String username,
             @RequestParam String password,
             @RequestParam String userAgent,
-            @RequestParam String language,
-            @RequestParam String screenResolution,
+            // @RequestParam String language,
+            // @RequestParam String screenResolution,
             @RequestParam String timezone,
             @RequestParam String platform,
             @RequestParam String canvas,
@@ -63,7 +63,7 @@ public class loginController {
         }
         if (encoder.matches(password, user.getPassword())) {
             session.setAttribute("username", username);
-            String res = userAgent + language + screenResolution + timezone + platform + canvas;
+            String res = userAgent + timezone + platform + canvas;
 
             String hashedFingerprint = hashFingerprintWithSHA256(res);
             // String fingerprint = encoder.encode(hashedFingerprint);

@@ -214,19 +214,19 @@
         inputUserAgent.value = userAgent;
         inputUserAgent.name = 'userAgent';
 
-        const language = navigator.language || navigator.userLanguage; 
-        let inputLanguage = document.createElement("input");
-        inputLanguage.hidden = true;
-        inputLanguage.type = 'text';
-        inputLanguage.value = language;
-        inputLanguage.name = 'language';
+        // const language = navigator.language || navigator.userLanguage; 
+        // let inputLanguage = document.createElement("input");
+        // inputLanguage.hidden = true;
+        // inputLanguage.type = 'text';
+        // inputLanguage.value = language;
+        // inputLanguage.name = 'language';
 
-        const screenResolution = screen.width + 'x' + screen.height; 
-        let inputScreenResolution = document.createElement("input");
-        inputScreenResolution.hidden = true;
-        inputScreenResolution.type = 'text';
-        inputScreenResolution.value = screenResolution;
-        inputScreenResolution.name = 'screenResolution';
+        // const screenResolution = screen.width + 'x' + screen.height; 
+        // let inputScreenResolution = document.createElement("input");
+        // inputScreenResolution.hidden = true;
+        // inputScreenResolution.type = 'text';
+        // inputScreenResolution.value = screenResolution;
+        // inputScreenResolution.name = 'screenResolution';
 
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         let inputTimezone = document.createElement("input");
@@ -263,14 +263,14 @@
         inputLocalstorage.name = 'isiLocalStorage';
 
         console.log(userAgent);
-        console.log(language);
-        console.log(screenResolution);
+        // console.log(language);
+        // console.log(screenResolution);
         console.log(timezone);
         console.log(platform);
 
         form.appendChild(inputUserAgent);
-        form.appendChild(inputLanguage);
-        form.appendChild(inputScreenResolution);
+        // form.appendChild(inputLanguage);
+        // form.appendChild(inputScreenResolution);
         form.appendChild(inputTimezone);
         form.appendChild(inputPlatform);
         form.appendChild(inputCanvas);
