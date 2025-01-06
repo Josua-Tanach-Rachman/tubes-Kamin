@@ -100,7 +100,7 @@ public class loginController {
             }
 
         } else {
-            return "redirect:/salahpassword";
+            return "redirect:/login";
         }
     }
 
